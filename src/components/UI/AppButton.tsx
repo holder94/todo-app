@@ -1,0 +1,47 @@
+import React from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform,
+} from 'react-native';
+import { THEME } from '../../theme';
+
+import { AppTextBold } from './AppTextBold';
+
+interface AppButtonProps {
+  color?: string;
+  onPress: () => void;
+}
+
+export const AppButton: React.FC<AppButtonProps> = ({
+  children,
+  color = THEME.MAIN_COLOR,
+  onPress,
+}) => {
+  const Wrapper =
+    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+  return (
+    <Wrapper activeOpacity={0.7} onPress={onPress}>
+      <View style={{ ...styles.button, backgroundColor: color }}>
+        <AppTextBold style={styles.text}>{children}</AppTextBold>
+      </View>
+    </Wrapper>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: '#fff',
+  },
+});
